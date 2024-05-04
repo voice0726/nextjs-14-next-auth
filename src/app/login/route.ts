@@ -1,14 +1,14 @@
-import { URL } from "url";
+import { URL } from 'url';
 
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from 'next/server';
 
-import { signIn } from "@/auth";
+import { signIn } from '@/auth';
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
-  const redirectTo = searchParams.get("redirect_to") || undefined;
+  const redirectTo = searchParams.get('redirect_to') || undefined;
 
-  await signIn("google", {
+  await signIn('google', {
     redirectTo,
     redirect: !!redirectTo,
   });
