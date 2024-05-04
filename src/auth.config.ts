@@ -7,6 +7,13 @@ export const authConfig = {
     GoogleProvider({
       clientId: process.env.AUTH_CLIENT_ID,
       clientSecret: process.env.AUTH_CLIENT_SECRET,
+      authorization: {
+        params: {
+          prompt: 'consent',
+          access_type: 'offline',
+          response_type: 'code',
+        },
+      },
     }),
   ],
   session: { strategy: 'jwt' },
@@ -25,7 +32,14 @@ export const authConfig = {
 
       return true;
     },
-    jwt: ({ token, user, account }) => {
+    jwt: ({ token, user, account, profile, isNewUser, trigger }) => {
+      console.log('[jwt callback]');
+      console.log('[jwt token] ', token);
+      console.log('[jwt account] ', account);
+      console.log('[jwt user] ', user);
+      console.log('[jwt profile] ', profile);
+      console.log('[jwt isNewUser] ', isNewUser);
+      console.log('[jwt trigger] ', trigger);
       if (user) {
         token.user = user;
       }
@@ -36,6 +50,8 @@ export const authConfig = {
       return token;
     },
     session: ({ session }) => {
+      console.log('[session callback]');
+      console.log('[sessoin session] ', session);
       return session;
     },
   },
